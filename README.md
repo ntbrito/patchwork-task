@@ -37,22 +37,24 @@ provisioning and deploying an application.
 
 ### Resilience 
 While the container will be restarted after a failure, as the desired count is set to 1, there will
-be a downtime if the task stops for some reason.
+be a downtime if the task stops. This solution does not contemplate autoscaling and if for some
+reason the resources are exhausted the application will become unresponsive. I choose not to
+implement autoscaling to be able to deliver the solution on a timely manner. 
 
 ### Observability
-The application publishes logs on AWS CloudWatch, while this allows to verify what may fail with the
+The application publishes logs on AWS CloudWatch, while this allows to troubleshoot failures with the
 application it doesn't provide an immediate visibility of possible issue.
 
 To have a better understanding of possible problems with the application we would need a monitoring
 system that can keep track of relevant metrics and present a visualization of those metrics. The
-monitoring system would be even more efficient if we added some alerts on relevant metrics and have
-the possibility to send notifications when a threshold on those metrics is met.
+monitoring system would be even more efficient if we added some thresholds on relevant metrics and have
+the possibility to create alerts and send notifications when a threshold on those metrics is met.
 
 Logging systems are mostly useful to troubleshoot when a problem occurs.
 
 ### Deployments and updates
 To update the current solution we need to run the script deploy.sh to create a new container image and
-push it to ECR. Then we will need to stop the running container and wait for it to start and pull the
+push it to ECR. Then we will need to stop the running task and wait for it to start and pull the
 new image available.
 
 Ideally we would have a pipeline describing all this steps and running from a CI/CD tool like jenkins
