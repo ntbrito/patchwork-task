@@ -50,3 +50,10 @@ the possibility to send notifications when a threshold on those metrics is met.
 
 Logging systems are mostly useful to troubleshoot when a problem occurs.
 
+### Deployments and updates
+To update the current solution we need to run the script deploy.sh to create a new container image and
+push it to ECR. Then we will need to stop the running container and wait for it to start and pull the
+new image available.
+
+Ideally we would have a pipeline describing all this steps and running from a CI/CD tool like jenkins
+or some pipeline offered by some control version systems like BitBucket Pipelines or GitHub Actions.
