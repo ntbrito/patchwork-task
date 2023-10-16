@@ -20,6 +20,9 @@ Once this is complete we can push the container to ECR
 The region is hardcoded on the variables file to be London (eu-west-2) and unfortunately this region
 needs to be passed to the deployment script, otherwise the container image is not accessible.
 
+Since there is no DNS, to access the application we will have to use the Load Balancer DNS
+name.
+
 ## Regarding Best Practices
 ### Security
 There are a few security issues with this solution. Even though access to the web application is

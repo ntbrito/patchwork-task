@@ -35,7 +35,7 @@ resource "aws_iam_role_policy" "ecs_generic_policy" {
 resource "aws_iam_role_policy" "ecs_policy" {
   name   = "${var.project_name}-get_secrets"
   role   = aws_iam_role.ecs_role.id
-  policy = data.aws_iam_policy_document.list_secrets.json
+  policy = data.aws_iam_policy_document.create_logs.json
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_policy_att" {
@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "exec_command_document" {
   }
 }
 
-data "aws_iam_policy_document" "list_secrets" {
+data "aws_iam_policy_document" "create_logs" {
   statement {
     actions = [
       "cloudwatch:PutMetricData",
@@ -77,16 +77,6 @@ data "aws_iam_policy_document" "list_secrets" {
       "logs:DescribeLogGroups",
       "logs:CreateLogStream",
       "logs:CreateLogGroup",
-    ]
-    resources = [
-      aws_ecs_cluster.ecs_cluster.arn,
-    ]
-  }
-  statement {
-    actions = [
-      "kms:Decrypt",
-      "ssm:GetParameters",
-      "secretsmanager:GetSecretValue",
     ]
     resources = [
       aws_ecs_cluster.ecs_cluster.arn,
