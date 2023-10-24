@@ -11,7 +11,7 @@ RUN curl -L https://golang.org/dl/go${GOVER}.linux-amd64.tar.gz --output go${GOV
 
 WORKDIR /app
 
-COPY main.go go.mod /app/
+COPY devops-test-main/main.go devops-test-main/go.mod /app/
 RUN CGO_ENABLED=0 /usr/bin/go/bin/go build -o webapp
 
 ENTRYPOINT [ "./webapp" ]
