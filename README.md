@@ -14,8 +14,8 @@ As it is described below.
 
 Once this is complete we can push the container to ECR
 ### How to deploy the application
-* change to the folder devops-test-main
-  * cd devops-test-main
+* From the main folder run the script deploy.sh (Note: you may need to go up one folder
+with the command "cd ..")
 * Run the bash script deploy.sh with the arguments account id and region
   * ./deploy.sh accountid region
 
