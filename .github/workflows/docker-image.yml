@@ -1,10 +1,13 @@
 name: Push Docker Image
 
 on:
+  push:
+    branches: [ "main" ]
   workflow_dispatch:
-    tags:
-      description: 'Test action'
-      required: false
+    inputs:
+      tags:
+        description: 'Test action'
+        required: false
     
 jobs:
 
