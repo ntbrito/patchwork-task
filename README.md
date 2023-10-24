@@ -22,6 +22,18 @@ with the command "cd ..")
 The region is hardcoded on the variables file to be London (eu-west-2) and unfortunately this region
 needs to be passed to the deployment script, otherwise the container image is not accessible.
 
+#### Alternatively there is a "github action" that can be run manually 
+If you fork the repository there is a github action that can be used for deployments.
+* From the tab "Actions", click on the action "Push Docker Image"
+* Press the "Run Workflow" button and enter the AWS credentials for the target account
+* The container will be deployed on the ECR Registry for that account.
+
+The drawback of using the github actions in this example is that we need to configure the
+"Actions permissions" for the repository to allow all actions as we use a few external actions.
+If you have concerns about security do not use this workflow. This is just to illustrate how we
+could update and maintain the application.
+
+### DNS names
 Since there is no DNS, to access the application we will have to use the Load Balancer DNS
 name.
 
