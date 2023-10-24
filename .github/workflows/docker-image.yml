@@ -8,11 +8,9 @@ on:
       aws-access-key:
         description: 'AWS Access Key'
         required: true
-        type: environment
       aws-secret-key:
         description: 'AWS Secret Key'
         required: true
-        type: environment
         
     
 jobs:
