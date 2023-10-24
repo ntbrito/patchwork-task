@@ -5,7 +5,8 @@ This is not a ready to production platform as there are many missing parts to ma
 As it is described below.
 
 ### How to deploy the infrastructure
-* Change to the folder 'terraform' 
+* Change directory to the folder 'terraform'
+  * cd terraform
 * Run the commands 
   * terraform init
   * terraform plan
