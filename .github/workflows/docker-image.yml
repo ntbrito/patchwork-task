@@ -5,9 +5,15 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
     inputs:
-      tags:
-        description: 'Test action'
-        required: false
+      aws-access-key:
+        description: 'AWS Access Key'
+        required: true
+        type: environment
+      aws-secret-key:
+        description: 'AWS Secret Key'
+        required: true
+        type: environment
+        
     
 jobs:
 
@@ -15,15 +21,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Pull repository
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file devops-test-main/Dockerfile --tag my-image-name:$(date +%s)
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ inputs.aws-access-key }}
+        aws-secret-access-key: ${{ inputs.aws-secret-key }}
         aws-region: eu-west-2
 
     - name: Login to Amazon ECR
@@ -34,11 +39,11 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+        ECR_REPOSITORY: 'patchwork/webapp'
         IMAGE_TAG: latest
       run: |
         # Build a docker container and push it to ECR 
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -f devops-test-main/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
         echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
